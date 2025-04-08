@@ -7,7 +7,7 @@ export default [
   {
     files: ['**/*.js'],
     languageOptions: {
-      sourceType: 'commonjs',
+      sourceType: 'module',
       globals: { ...globals.node },
       ecmaVersion: 'latest',
     },
@@ -16,8 +16,6 @@ export default [
     },
     rules: {
       '@stylistic/js/indent': ['error', 4],
-      '@stylistic/js/linebreak-style': ['error', 'unix'],
-      '@stylistic/js/quotes': ['error', 'single'],
       '@stylistic/js/semi': ['error', 'never'],
       // eqeqeq: 'error',
       'no-trailing-spaces': 'error',
