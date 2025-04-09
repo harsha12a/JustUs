@@ -18,11 +18,23 @@ export const getChat = asyncHandler ( async (req, res) => {
 
 export const createChat = asyncHandler ( async (req, res) => {
     try {
+        let users = await prisma.user.findMany({
+            where: {
+                username: {
+                    in: [
+                        req.body.userId.toLowerCase(),
+                        req.body.inviteeId.toLowerCase()
+                    ]
+                }
+            }
+        })
+        if(users.length < 2) return res.status(400).send({ message: "User not found" })
+        let [u1, u2] = users
         let resp = await prisma.chat.create({
             data: {
                 participants: [
-                    req.body.userId,
-                    req.body.inviteeId
+                    u1.id,
+                    u2.id
                 ]
             }
         })
@@ -30,4 +42,21 @@ export const createChat = asyncHandler ( async (req, res) => {
     } catch (error) {
         return res.status(500).send({ message: error.message })
     }
+})
+
+export const getMessage = asyncHandler ( async (req, res) => {
+    let resp = await prisma.chat.findUnique({
+        where: {
+            id: req.params.id
+        },
+        include: {
+            messages: {
+                orderBy: {
+                    createdAt: 'asc'
+                }
+            }
+        }
+    })
+    if (!resp) return res.status(404).send({ message: "Message not found" })
+    else res.send(resp)
 })

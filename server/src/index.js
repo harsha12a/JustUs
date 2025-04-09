@@ -3,6 +3,7 @@ import cors from "cors"
 import dotenv from "dotenv"
 import user from './routers/user.route.js'
 import chat from './routers/chat.route.js'
+import message from './routers/message.route.js'
 let app = express()
 dotenv.config()
 
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 
 app.use('/user', user)
 app.use('/chat', chat)
+app.use('/message', message)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)

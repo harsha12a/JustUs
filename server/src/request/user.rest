@@ -2,13 +2,16 @@
 get http://localhost:4000/user
 
 ###
+get http://localhost:4000/user/chats/67f51300f0c5d341786a2866
+
+###
 post http://localhost:4000/user/
 Content-Type: application/json
 
 {
-    "username": "John Doe",
-    "email": "red@gmail.com",
-    "password": "red"
+    "username": "blue",
+    "email": "blue@gmail.com",
+    "password": "blue"
 }
 
 ###
@@ -16,6 +19,6 @@ post http://localhost:4000/user/login
 Content-Type: application/json
 
 {
-    "username": "John Doe",
-    "password": "red"
+    "username": "blue",
+    "password": "blue"
 }
