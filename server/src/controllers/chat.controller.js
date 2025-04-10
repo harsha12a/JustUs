@@ -7,13 +7,30 @@ export const getChats = asyncHandler ( async (req, res) => {
 })
 
 export const getChat = asyncHandler ( async (req, res) => {
-    let resp = await prisma.chat.findUnique({
-        where: {
-            id: req.params.id
-        }
-    })
-    if (!resp) return res.status(404).send({ message: "Chat not found" })
-    else res.send(resp)
+    try {
+        let resp = await prisma.chat.findMany({
+            where: {
+                participants: {
+                    has: req.params.id
+                }
+            },
+            include: {
+                messages: {
+                    orderBy: {
+                        createdAt: 'asc'
+                    }
+                }
+            },
+            orderBy: {
+                updatedAt: 'desc'
+            }
+        })
+        if (!resp) return res.status(404).send({ message: "Chat not found" })
+        else res.send(resp)
+    }
+    catch (error) {
+        return res.status(500).send({ message: error.message })
+    }
 })
 
 export const createChat = asyncHandler ( async (req, res) => {
@@ -30,6 +47,17 @@ export const createChat = asyncHandler ( async (req, res) => {
         })
         if(users.length < 2) return res.status(400).send({ message: "User not found" })
         let [u1, u2] = users
+        let chat = await prisma.chat.findFirst({
+            where: {
+                participants: {
+                    hasEvery: [
+                        u1.id,
+                        u2.id
+                    ]
+                }
+            }
+        })
+        if (chat) return res.status(400).send({ message: "Chat already exists", payload: chat })
         let resp = await prisma.chat.create({
             data: {
                 participants: [
@@ -44,19 +72,19 @@ export const createChat = asyncHandler ( async (req, res) => {
     }
 })
 
-export const getMessage = asyncHandler ( async (req, res) => {
-    let resp = await prisma.chat.findUnique({
-        where: {
-            id: req.params.id
-        },
-        include: {
-            messages: {
-                orderBy: {
-                    createdAt: 'asc'
-                }
-            }
-        }
-    })
-    if (!resp) return res.status(404).send({ message: "Message not found" })
-    else res.send(resp)
+export const getMessage = asyncHandler ( async (req, res) => { // implemented at getChat() in chats
+    // let resp = await prisma.chat.findUnique({
+    //     where: {
+    //         id: req.params.id
+    //     },
+    //     include: {
+    //         messages: {
+    //             orderBy: {
+    //                 createdAt: 'asc'
+    //             }
+    //         }
+    //     }
+    // })
+    // if (!resp) return res.status(404).send({ message: "Message not found" })
+    // else res.send(resp)
 })

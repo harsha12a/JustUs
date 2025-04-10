@@ -54,21 +54,21 @@ export const loginUser = asyncHandler ( async (req, res) => {
     }
 })
 
-export const getChats = asyncHandler ( async (req, res) => {
-    try {
-        let resp = await prisma.chat.findMany({
-            where: {
-                participants: {
-                    has: req.params.id
-                }
-            },
-            include: {
-                messages: true
-            }
-        })
-        res.send(resp)
-    }
-    catch (error) {
-        return res.status(500).send({ message: error.message })
-    }
+export const getChats = asyncHandler ( async (req, res) => { // implemented at getChat() in chats
+    // try {
+    //     let resp = await prisma.chat.findMany({
+    //         where: {
+    //             participants: {
+    //                 has: req.params.id
+    //             }
+    //         },
+    //         include: {
+    //             messages: true
+    //         }
+    //     })
+    //     res.send(resp)
+    // }
+    // catch (error) {
+    //     return res.status(500).send({ message: error.message })
+    // }
 })

@@ -9,9 +9,9 @@ post http://localhost:4000/user/
 Content-Type: application/json
 
 {
-    "username": "blue",
-    "email": "blue@gmail.com",
-    "password": "blue"
+    "username": "red",
+    "email": "red@gmail.com",
+    "password": "red"
 }
 
 ###
