@@ -24,7 +24,7 @@ export const createMessage = asyncHandler(async (req, res) => {
                 content: req.body.content
             }
         })
-        let chat = await prisma.chat.update({
+        await prisma.chat.update({
             where: {
                 id: req.params.id
             },
@@ -37,7 +37,7 @@ export const createMessage = asyncHandler(async (req, res) => {
                 updatedAt: new Date()
             }
         })
-        res.status(201).json({ message: "Created", payload: chat })
+        res.status(201).json({ message: "Created", payload: resp })
     }
     catch (error) {
         res.status(500).json({ message: error.message })

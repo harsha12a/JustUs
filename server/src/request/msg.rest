@@ -2,10 +2,10 @@
 get http://localhost:4000/message
 
 ###
-post http://localhost:4000/message/67f7718322dc68138228a255
+post http://localhost:4000/message/67f7734797fc6bdd8c4e1df5
 Content-Type: application/json
 
 {
-    "senderId": "67f7715d22dc68138228a252",
-    "content": "Hello, how are you?"
+    "senderId": "67f7733697fc6bdd8c4e1df4",
+    "content": "I am new here"
 }
