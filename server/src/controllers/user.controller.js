@@ -1,6 +1,9 @@
 import prisma from "../utils/prisma.config.js"
 import asyncHandler from "express-async-handler"
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+dotenv.config()
 
 export const getAllUsers = asyncHandler ( async (req, res) => {
     let resp = await prisma.user.findMany()
@@ -46,7 +49,12 @@ export const loginUser = asyncHandler ( async (req, res) => {
         else {
             const isMatch = await bcrypt.compare(req.body.password, resp.password)
             if (!isMatch) return res.status(401).send({ message: "Invalid credentials" })
-            else res.send({ message: "Login successful", resp })
+            else {
+                let token = jwt.sign({ id: resp.id }, process.env.SECRET_KEY, {
+                    expiresIn: "30d"
+                })
+                res.send({ message: "Login successful", resp, token })
+            }
         }
     }
     catch (error) {
@@ -54,7 +62,7 @@ export const loginUser = asyncHandler ( async (req, res) => {
     }
 })
 
-export const getChats = asyncHandler ( async (req, res) => { // implemented at getChat() in chats
+export const getChats = asyncHandler ( async () => { // implemented at getChat() in chats
     // try {
     //     let resp = await prisma.chat.findMany({
     //         where: {

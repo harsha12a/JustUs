@@ -72,7 +72,7 @@ export const createChat = asyncHandler ( async (req, res) => {
     }
 })
 
-export const getMessage = asyncHandler ( async (req, res) => { // implemented at getChat() in chats
+export const getMessage = asyncHandler ( async () => { // implemented at getChat() in chats
     // let resp = await prisma.chat.findUnique({
     //     where: {
     //         id: req.params.id

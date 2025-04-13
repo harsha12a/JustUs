@@ -20,6 +20,11 @@ app.use('/user', user)
 app.use('/chat', chat)
 app.use('/message', message)
 
+app.use((req, res, next) => {
+    console.log('route not found')
+    next()
+})
+
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)
 })

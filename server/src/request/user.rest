@@ -2,7 +2,7 @@
 get http://localhost:4000/user
 
 ###
-get http://localhost:4000/user/chats/67f51300f0c5d341786a2866
+# get http://localhost:4000/user/chats/67f51300f0c5d341786a2866
 
 ###
 post http://localhost:4000/user/
