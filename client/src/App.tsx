@@ -3,6 +3,7 @@ import HeroSection from './components/HeroSection'
 import RootLayout from './RootLayout'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
   const browser = createBrowserRouter([
@@ -26,7 +27,16 @@ function App() {
     }
   ])
   return (
-    <RouterProvider router={browser}></RouterProvider>
+    <>
+      <RouterProvider router={browser} />
+      <ToastContainer 
+        position='top-center'
+        autoClose={2000}
+        hideProgressBar={false}
+        closeOnClick={true}
+        theme='colored'
+      />
+    </>
   )
 }
 
