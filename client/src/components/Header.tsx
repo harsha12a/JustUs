@@ -19,7 +19,7 @@ function Header() {
   }
   return (
     <div>
-      <nav className="flex shadow-[0px_0px_5px_2px] p-4 justify-between items-center dark:bg-black dark:text-white">
+      <nav className="flex p-4 justify-between items-center dark:bg-black dark:text-white">
         <img src={logo} alt="" className="w-10 h-10 mx-5 my-2" />
         <div className="flex items-center justify-between flex-wrap">
           {
