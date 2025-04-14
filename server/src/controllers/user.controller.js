@@ -53,13 +53,29 @@ export const loginUser = asyncHandler ( async (req, res) => {
                 let token = jwt.sign({ id: resp.id }, process.env.SECRET_KEY, {
                     expiresIn: "30d"
                 })
-                res.send({ message: "Login successful", resp, token })
+                delete resp.password
+                res.cookie('token', token, {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: 'Strict',
+                    maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+                })
+                return res.send({ message: "Login successful", resp })
             }
         }
     }
     catch (error) {
         return res.status(500).send({ message: error.message })
     }
+})
+
+export const logoutUser = asyncHandler ( async (req, res) => {
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: false,
+        sameSite: 'Strict'
+    })
+    res.send({ message: "Logout successful" })
 })
 
 export const getChats = asyncHandler ( async () => { // implemented at getChat() in chats

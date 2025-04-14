@@ -3,16 +3,13 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const tokenVerify = (req, res, next) => {
-    const bearerToken = req.headers.authorization
+    const bearerToken = req.cookies.token || req.headers.authorization
+    console.log(req.cookies.token)
     if(!bearerToken) {
-        return res.status(401).json({ message: 'Unauthorized' })
-    }
-    const token = bearerToken.split(' ')[1]
-    if (!token) {
-        return res.status(401).json({ message: 'Unauthorized' })
+        return res.status(401).json({ message: 'Token invalid' })
     }
     try {
-        jwt.verify(token, process.env.SECRET_KEY)
+        jwt.verify(bearerToken, process.env.SECRET_KEY)
         next()
     }
     catch (err) {
