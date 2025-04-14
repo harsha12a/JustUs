@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 * {
     margin: 0;
@@ -10,4 +14,10 @@
 .dark {
     background-color: #000;
     color: white;
+}
+
+.fonting {
+    font-family: "Cinzel Decorative", serif;
+    font-weight: 600;
+    font-style: normal;
 }

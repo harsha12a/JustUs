@@ -1,6 +1,6 @@
 import { Moon, Sun } from "lucide-react"
 import { useEffect, useState } from "react"
-import logo from '../assets/logo1.gif'
+// import logo from '../assets/logo1.gif'
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
 import { logout } from "../redux/slices/userSlice"
@@ -20,7 +20,8 @@ function Header() {
   return (
     <div>
       <nav className="flex p-4 justify-between items-center dark:bg-black dark:text-white">
-        <img src={logo} alt="" className="w-10 h-10 mx-5 my-2" />
+        {/* <img src={logo} alt="" className="w-10 h-10 mx-5 my-2" /> */}
+        <div className="ml-5 fonting text-lg">JustUs</div>
         <div className="flex items-center justify-between flex-wrap">
           {
             !status ? 
@@ -30,7 +31,7 @@ function Header() {
               </div> : 
               <div>
                 <button onClick={handleLogout} className="mx-5 my-2 text-lg">Logout</button>
-                <Link to={'signup'} className="mx-5 my-2 text-lg">Profile</Link>
+                <Link to={'profile'} className="mx-5 my-2 text-lg">Profile</Link>
               </div>
           }
           <button onClick={() => setDark(!dark)} className="flex items-center rounded-full w-14 h-7 bg-gray-300 dark:bg-zinc-700 p-1 transition-colors duration-300">

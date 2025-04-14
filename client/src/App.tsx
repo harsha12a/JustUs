@@ -4,6 +4,7 @@ import RootLayout from './RootLayout'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
 import { ToastContainer } from 'react-toastify'
+import Profile from './components/Profile'
 
 function App() {
   const browser = createBrowserRouter([
@@ -22,6 +23,10 @@ function App() {
         {
           path: 'signup',
           element: <SignUp />
+        },
+        {
+          path: 'profile',
+          element: <Profile />
         }
       ]
     }

@@ -1,4 +1,3 @@
-
 ```
 JustUs
 ├─ client
@@ -14,9 +13,25 @@ JustUs
 │  │  ├─ App.css
 │  │  ├─ App.tsx
 │  │  ├─ assets
+│  │  │  ├─ logo.gif
+│  │  │  ├─ logo1.gif
 │  │  │  └─ react.svg
+│  │  ├─ components
+│  │  │  ├─ Header.tsx
+│  │  │  ├─ HeroSection.tsx
+│  │  │  ├─ Login.tsx
+│  │  │  ├─ Profile.tsx
+│  │  │  └─ SignUp.tsx
+│  │  ├─ hooks
+│  │  │  └─ useNotify.tsx
 │  │  ├─ index.css
 │  │  ├─ main.tsx
+│  │  ├─ redux
+│  │  │  ├─ slices
+│  │  │  │  ├─ chatSlice.ts
+│  │  │  │  └─ userSlice.ts
+│  │  │  └─ store.ts
+│  │  ├─ RootLayout.tsx
 │  │  └─ vite-env.d.ts
 │  ├─ tailwind.config.js
 │  ├─ tsconfig.app.json
@@ -39,6 +54,8 @@ JustUs
       │  ├─ message.controller.js
       │  └─ user.controller.js
       ├─ index.js
+      ├─ middlewares
+      │  └─ tokenVerify.js
       ├─ request
       │  ├─ chat.rest
       │  ├─ msg.rest
