@@ -25,6 +25,23 @@ export const getChat = asyncHandler ( async (req, res) => {
                 updatedAt: 'desc'
             }
         })
+        await Promise.all(
+            resp.map(async(user) => {
+                let Users = user.participants
+                let participants = await prisma.user.findMany({
+                    where: {
+                        id: {
+                            in: Users
+                        }
+                    },
+                    select: {
+                        username: true,
+                        profilePic: true
+                    }
+                })
+                user.participants = participants
+            })
+        )
         if (!resp) return res.status(404).send({ message: "Chat not found" })
         else res.send(resp)
     }

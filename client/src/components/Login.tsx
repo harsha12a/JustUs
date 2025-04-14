@@ -46,14 +46,14 @@ function Login() {
               type="text"
               {...register('username', { required: true })}
               // placeholder=" "
-              className={`peer p-2 px-5 w-full bg-transparent border rounded-sm focus:outline-none focus:border-black dark:focus:border-white ${details.username ? 'border-black dark:border-white' : ''} `}
+              className={`peer p-2 px-5 w-full bg-transparent border rounded-sm focus:outline-none focus:border-black dark:focus:border-white border-black dark:border-white`}
               id="username"
               onChange={(e) => {setDetails({...details, username: e.target.value})}}
             />
             <div className={`absolute left-5 top-1/2 -translate-y-1/2 transition-all duration-200 peer-focus:top-0 bg-gray-200 dark:bg-gray-900 px-1 peer-focus:text-sm ${details.username ? 'top-[0px] text-sm' : ''} text-lg`}>
               Enter username
             </div>
-            <div className={`bg-black dark:bg-white peer-focus:w-0 h-[1px] absolute top-3/4 mx-5 ${details.username ? 'w-0' : 'w-[180px] sm:w-[500px]'}`}></div>
+            {/* <div className={`bg-black dark:bg-white peer-focus:w-0 h-[1px] absolute top-3/4 mx-5 ${details.username ? 'w-0' : 'w-[180px] sm:w-[500px]'}`}></div> */}
 
           </div>
 
@@ -66,14 +66,14 @@ function Login() {
               type="password"
               {...register('password', { required: true })}
               // placeholder=" "
-              className={`peer p-2 px-5 w-full bg-transparent border rounded-sm focus:outline-none focus:border-black dark:focus:border-white ${details.password ? 'border-black dark:border-white' : ''} `}
+              className={`peer p-2 px-5 w-full bg-transparent border rounded-sm focus:outline-none focus:border-black dark:focus:border-white border-black dark:border-white`}
               id="username"
               onChange={(e) => {setDetails({...details, password: e.target.value})}}
             />
             <div className={`absolute left-5 top-1/2 -translate-y-1/2 transition-all duration-200 peer-focus:top-0 bg-gray-200 dark:bg-gray-900 px-1 peer-focus:text-sm ${details.password ? 'top-[0px] text-sm' : ''} text-lg`}>
               Enter password
             </div>
-            <div className={`bg-black dark:bg-white peer-focus:w-0 h-[1px] absolute top-3/4 mx-5 ${details.password ? 'w-0' : 'w-[180px] sm:w-[500px]'}`}></div>
+            {/* <div className={`bg-black dark:bg-white peer-focus:w-0 h-[1px] absolute top-3/4 mx-5 ${details.password ? 'w-0' : 'w-[180px] sm:w-[500px]'}`}></div> */}
 
           </div>
           {err.password && <span className='text-red-500'>*This field is required</span>}
