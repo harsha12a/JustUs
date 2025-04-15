@@ -1,6 +1,8 @@
 ###
-get http://localhost:4000/chat/67f7733697fc6bdd8c4e1df4
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Zjc3MTVkMjJkYzY4MTM4MjI4YTI1MiIsImlhdCI6MTc0NDUzMzI5MiwiZXhwIjoxNzQ3MTI1MjkyfQ.HHl5N3RhXC_6t8OPNky0g4Wr7LVBN4QFwnJOtx34aWE
+get http://localhost:4000/chat/
+###
+get http://localhost:4000/chat/67f7716822dc68138228a253
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3Zjc3MTY4MjJkYzY4MTM4MjI4YTI1MyIsImlhdCI6MTc0NDY4ODcyNywiZXhwIjoxNzQ3MjgwNzI3fQ.UWYsbUFKsEeaahyjh1VxthGJw8_mQZoiohpWxrEpsLI
 ###
 
 # get http://localhost:4000/chat/msg/67f69290140e9840dcb1f578

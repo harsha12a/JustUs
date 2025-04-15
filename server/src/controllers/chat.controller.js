@@ -14,16 +14,16 @@ export const getChat = asyncHandler ( async (req, res) => {
                     has: req.params.id
                 }
             },
-            include: {
-                messages: {
-                    orderBy: {
-                        createdAt: 'asc'
-                    }
-                }
-            },
-            orderBy: {
-                updatedAt: 'desc'
-            }
+            // include: {
+            //     messages: {
+            //         orderBy: {
+            //             createdAt: 'asc'
+            //         }
+            //     }
+            // },
+            // orderBy: {
+            //     updatedAt: 'desc'
+            // }
         })
         await Promise.all(
             resp.map(async(user) => {

@@ -3,11 +3,19 @@ import asyncHandler from 'express-async-handler'
 
 export const getMessages = asyncHandler(async (req, res) => {
     try {
-        let resp = await prisma.message.findMany({
+        let resp = await prisma.chat.findMany({
             where: {
-                chatId: req.params.id
+                id: req.params.id
+            },
+            include: {
+                messages: {
+                    orderBy: {
+                        createdAt: 'asc'
+                    }
+                }
             }
         })
+        resp = resp[0].messages
         res.status(200).json(resp)
     }
     catch (error) {
