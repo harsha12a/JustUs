@@ -5,6 +5,7 @@ import { setChat } from '../redux/slices/chatSlice'
 import profile from '../assets/profile.png'
 import ChatDetails from './ChatDetails'
 import { getMessages } from '../redux/slices/messageSlice'
+import { Search } from 'lucide-react'
 
 function Chat() {
   const user = useSelector((state: any) => state.user.user)
@@ -14,8 +15,9 @@ function Chat() {
   const [currChat, setCurrChat] = useState([])
   const [loading, setLoading] = useState(false)
   const [chat, setChats] = useState({})
-  const [showChatDetails, setShowChatDetails] = useState(false) // 🔸
-
+  const [showChatDetails, setShowChatDetails] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filtered, setFiltered] = useState([])
   useEffect(() => {
     if (user) {
       setLoading(true)
@@ -35,7 +37,12 @@ function Chat() {
       getChat()
     }
   }, [user, dispatch])
-
+  useEffect(() => {
+    setFiltered(chats.filter((chat: any) => {
+      const other = chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0]
+      return other.username.toLowerCase().includes(searchQuery.toLowerCase())
+    }))
+  }, [searchQuery])
   const getChat = async (chat: any) => {
     setLoading(true)
     setChats(chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0])
@@ -43,7 +50,7 @@ function Chat() {
       .then((res) => {
         setCurrChat(res.data)
         dispatch(getMessages(res.data))
-        setShowChatDetails(true) // 🔸 Show right panel
+        setShowChatDetails(true)
       })
       .catch((err) => {
         console.log(err)
@@ -54,7 +61,7 @@ function Chat() {
   }
 
   const handleBack = () => {
-    setShowChatDetails(false) // 🔸 Show left panel
+    setShowChatDetails(false)
     setCurrChat([])
   }
 
@@ -70,17 +77,38 @@ function Chat() {
 
       {/* Chat list sidebar */}
       <div className={`flex-col overflow-y-auto sm:w-[350px] sm:flex w-full ${showChatDetails ? 'hidden' : 'flex'} border-r-2 border-gray-500`}>
+        <div className="flex bg-gray-600 px-5 items-center">
+          <Search className="mr-3" />
+          <input
+            type="text"
+            placeholder="Search"
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="py-3 bg-transparent border-none outline-none w-full"
+          />
+        </div>
+
         {
-          chats.map((chat: any) => {
-            const other = chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0]
-            return (
-              <div key={chat.id} className='flex items-center gap-2 cursor-pointer dark:hover:bg-brn hover:bg-grn rounded-sm p-2 m-2' onClick={() => getChat(chat)}>
-                <img src={other.profilePic || profile} alt="" className='ml-5 w-10 rounded-full' />
-                <div className='text-xl'>{other.username}</div>
-              </div>
-            )
-          })
+          filtered.length !== 0 ? (
+            <div>
+              {filtered.map((chat: any) => {
+                const other = chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0]
+                return (
+                  <div
+                    key={chat.id}
+                    className='flex items-center gap-5 cursor-pointer dark:hover:bg-brn hover:bg-grn rounded-sm p-2 m-2'
+                    onClick={() => getChat(chat)}
+                  >
+                    <img src={other.profilePic || profile} alt="" className='ml-3 w-10 rounded-full' />
+                    <div className='text-xl'>{other.username}</div>
+                  </div>
+                )
+              })}
+            </div>
+          ) : (
+            <div>No Chats</div>
+          )
         }
+
       </div>
 
       {/* Chat details panel */}
