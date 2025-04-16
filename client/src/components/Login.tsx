@@ -20,7 +20,7 @@ function Login() {
       .then((res) => {
         dispatch(login(res.data.resp))
         notify.success(res.data.message)
-        navigate('/')
+        navigate('/chat')
       })
       .catch((err) => {
         notify.error(err.response.data.message)

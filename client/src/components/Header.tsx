@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/slices/userSlice";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 function Header() {
   const [dark, setDark] = useState(localStorage.getItem("theme") === "dark");
   const [header, setHeader] = useState(false);
   const menuRef = useRef(null);
   const status = useSelector((state: any) => state.user.isLoggedIn);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate()
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
     localStorage.setItem("theme", dark ? "dark" : "light");
@@ -40,11 +40,11 @@ function Header() {
         <Menu />
       </div>
 
-      <nav className="flex p-4 justify-between items-center dark:bg-black dark:text-white bg-white shadow-md">
+      <nav className="flex p-4 justify-between items-center dark:bg-[#1b222c] bg-[#ddc2ff]">
         <div className="ml-5 font-bold text-xl fonting">JustUs</div>
 
         {/* Desktop Menu */}
-        <div className="hidden sm:flex items-center space-x-5 text-lg">
+        <div className="hidden sm:flex items-center gap-24 text-lg">
           {!status ? (
             <>
               <Link to="/login">Login</Link>
@@ -52,7 +52,7 @@ function Header() {
             </>
           ) : (
             <>
-              <button onClick={handleLogout}>Logout</button>
+              <button onClick={() => {handleLogout();navigate('/')}}>Logout</button>
               <Link to="/chat">Chats</Link>
               <Link to="/profile">Profile</Link>
             </>
@@ -62,7 +62,7 @@ function Header() {
         {/* Theme Toggle */}
         <button
           onClick={() => setDark(!dark)}
-          className="flex items-center rounded-full w-14 h-7 bg-gray-300 dark:bg-zinc-700 p-1 transition-colors duration-300"
+          className="flex items-center rounded-full w-14 h-7 bg-zinc-400 dark:bg-zinc-700 p-1 transition-colors duration-300"
         >
           <div
             className={`w-5 h-5 rounded-full bg-white dark:bg-yellow-400 shadow-md transform transition-transform duration-300 ${

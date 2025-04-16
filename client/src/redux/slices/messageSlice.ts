@@ -3,14 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 const messageSlice = createSlice({
     name: 'message',
     initialState: {
-        messages: []
+        message: []
     },
     reducers: {
         getMessages: (state, action) => {
-            state.messages = action.payload
+            state.message = action.payload
         }
     }
 })
 
 export const { getMessages } = messageSlice.actions
-export default messageSlice
+export default messageSlice.reducer

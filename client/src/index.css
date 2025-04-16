@@ -11,6 +11,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 .dark {
     background-color: #000;
     color: white;
@@ -20,4 +21,15 @@
     font-family: "Cinzel Decorative", serif;
     font-weight: 600;
     font-style: normal;
+}
+
+/* For Chrome, Safari and Opera */
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-none {
+    -ms-overflow-style: none;/* IE and Edge */
+    scrollbar-width: none;/* Firefox */
 }
