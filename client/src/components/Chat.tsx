@@ -6,6 +6,7 @@ import profile from '../assets/profile.png'
 import ChatDetails from './ChatDetails'
 import { getMessages } from '../redux/slices/messageSlice'
 import { Search } from 'lucide-react'
+import { set } from 'react-hook-form'
 
 function Chat() {
   const user = useSelector((state: any) => state.user.user)
@@ -18,6 +19,7 @@ function Chat() {
   const [showChatDetails, setShowChatDetails] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [filtered, setFiltered] = useState([])
+  const [id, setId] = useState("")
   useEffect(() => {
     if (user) {
       setLoading(true)
@@ -38,11 +40,13 @@ function Chat() {
     }
   }, [user, dispatch])
   useEffect(() => {
-    setFiltered(chats.filter((chat: any) => {
-      const other = chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0]
-      return other.username.toLowerCase().includes(searchQuery.toLowerCase())
-    }))
-  }, [searchQuery])
+    if(chats) {
+      setFiltered(chats.filter((chat: any) => {
+        const other = chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0]
+        return other.username.toLowerCase().includes(searchQuery.toLowerCase())
+      }))
+    }
+  }, [searchQuery, chats, user.username])
   const getChat = async (chat: any) => {
     setLoading(true)
     setChats(chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0])
@@ -50,6 +54,7 @@ function Chat() {
       .then((res) => {
         setCurrChat(res.data)
         dispatch(getMessages(res.data))
+        setId(chat.id)
         setShowChatDetails(true)
       })
       .catch((err) => {
@@ -63,6 +68,7 @@ function Chat() {
   const handleBack = () => {
     setShowChatDetails(false)
     setCurrChat([])
+    setId("")
   }
 
   return (
@@ -115,7 +121,7 @@ function Chat() {
       <div className={`flex-grow ${showChatDetails ? 'block' : 'hidden'} sm:block`}>
         {
           currChat.length !== 0 ? (
-            <ChatDetails chat={chat} onBack={handleBack} /> // 🔸 pass back handler
+            <ChatDetails chat={chat} id={id} onBack={handleBack} />
           ) : (
             <div className='flex justify-center items-center h-full text-2xl'>No Chat Selected</div>
           )

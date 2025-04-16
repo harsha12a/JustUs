@@ -6,6 +6,9 @@ import chat from './routers/chat.route.js'
 import message from './routers/message.route.js'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
+import initSocket from '../socket/socket.js'
+import { Server } from 'socket.io'
+import http from 'http'
 let app = express()
 dotenv.config()
 
@@ -17,6 +20,16 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(morgan('dev'))
 
+const server = http.createServer(app)
+const io = new Server(server, {
+    cors: {
+        origin: 'http://localhost:5173',
+        credentials: true
+    }
+})
+
+initSocket(io)
+
 app.get('/', (req, res) => {
     res.send('JustUs Server is running')
 })
@@ -25,11 +38,11 @@ app.use('/user', user)
 app.use('/chat', chat)
 app.use('/message', message)
 
-app.use((req, res, next) => {
-    console.log('route not found')
+app.use((req, res, next, err) => {
+    console.log(err, 'err')
     next()
 })
 
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}`)
 })

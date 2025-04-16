@@ -23,28 +23,20 @@ export const getMessages = asyncHandler(async (req, res) => {
     }
 })
 
+export async function saveMsg (id, senderId, content) {
+    let resp = await prisma.message.create({
+        data: {
+            chatId: id,
+            senderId: senderId,
+            content: content
+        }
+    })
+    return resp
+}
+
 export const createMessage = asyncHandler(async (req, res) => {
     try {
-        let resp = await prisma.message.create({
-            data: {
-                chatId: req.params.id,
-                senderId: req.body.senderId,
-                content: req.body.content
-            }
-        })
-        await prisma.chat.update({
-            where: {
-                id: req.params.id
-            },
-            data: {
-                messages: {
-                    connect: {
-                        id: resp.id
-                    }
-                },
-                updatedAt: new Date()
-            }
-        })
+        const resp = await saveMsg(req.params.id, req.body.senderId, req.body.content)
         res.status(201).json({ message: "Created", payload: resp })
     }
     catch (error) {

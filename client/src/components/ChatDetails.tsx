@@ -1,22 +1,42 @@
 import EmojiPicker from "emoji-picker-react";
 import { ArrowLeft, Send, Smile } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import socket from "../config/socket";
 
-function ChatDetails({ chat, onBack }: any) {
+function ChatDetails({ chat, id, onBack }: any) {
   const user = useSelector((state: any) => state.user.user);
-  const messages = useSelector((state: any) => state.message.message);
+  const msg = useSelector((state: any) => state.message.message);
+  const [messages, setMessages] = useState(msg)
   const [text, setText] = useState("");
   const [picker, setPicker] = useState(false);
   const updateEmoji = (emoji: any) => {
     setText(text => text + emoji.emoji);
   }
-  const handleMessage = (e) => {
+  useEffect(() => {
+    setMessages(msg)
+  }, [id, msg])
+  useEffect(() => {
+    socket.on('receieveMsg', (msg: any) => {
+      setMessages(prev => [...prev, msg])
+    })
+    socket.on('messageSent', (msg: any) => {
+      setMessages(prev => [...prev, msg])
+    })
+    return () => {
+      socket.off('receieveMsg')
+      socket.off('messageSent')
+    }
+  })
+  const handleMessage = (e: any) => {
     if(e.shiftKey) return;
     e.preventDefault()
     setText("")
     setPicker(false)
-    console.log(text)
+    // axios.post(`http://localhost:4000/message/${id}`, { senderId: user.id, content: text}, { withCredentials: true })
+    // .then((res) => console.log(res))
+    // .catch(err => console.log(err))
+    socket.emit('sendMsg', { chatId: id, senderId: user.id, receiverUsername: chat.username, content: text })
   }
   return (
     <div className="relative h-[calc(100vh-60px)] flex flex-col">
