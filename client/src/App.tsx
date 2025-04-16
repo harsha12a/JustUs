@@ -6,6 +6,7 @@ import SignUp from './components/SignUp'
 import { ToastContainer } from 'react-toastify'
 import Profile from './components/Profile'
 import Chat from './components/Chat'
+import NotFound from './components/NotFound'
 
 function App() {
   const browser = createBrowserRouter([
@@ -33,6 +34,10 @@ function App() {
           path: 'profile',
           element: <Profile />
         },
+        {
+          path: '*',
+          element: <NotFound />
+        }
       ]
     }
   ])
