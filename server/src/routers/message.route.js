@@ -3,7 +3,7 @@ import { getMessages, createMessage } from '../controllers/message.controller.js
 import tokenVerify from '../middlewares/tokenVerify.js'
 const router = express.Router()
 
-router.get('/:id', getMessages)
+router.get('/:id', tokenVerify, getMessages)
 router.post('/:id', tokenVerify, createMessage)
 
 export default router

@@ -5,7 +5,6 @@ import { login } from '../redux/slices/userSlice'
 import { useState } from 'react'
 import useNotify from '../hooks/useNotify'
 import { useNavigate } from 'react-router-dom'
-import socket from '../config/socket'
 function Login() {
   const { register, watch, handleSubmit, formState: { errors: err } } = useForm()
   const [loading, setLoading] = useState(false)
@@ -21,7 +20,6 @@ function Login() {
       .then((res) => {
         dispatch(login(res.data.resp))
         notify.success(res.data.message)
-        socket.emit('register', obj.username)
         navigate('/chat')
       })
       .catch((err) => {

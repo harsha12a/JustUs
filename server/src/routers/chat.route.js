@@ -5,7 +5,7 @@ import tokenVerify from '../middlewares/tokenVerify.js'
 const router = express.Router()
 
 router.get('/', getChats)
-router.get('/:id', tokenVerify, getChat)
+router.get('/:id/:time', tokenVerify, getChat)
 router.post('/', tokenVerify, createChat)
 router.get('/msg/:id', getMessage)
 

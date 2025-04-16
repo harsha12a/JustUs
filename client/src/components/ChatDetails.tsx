@@ -1,6 +1,6 @@
 import EmojiPicker from "emoji-picker-react";
 import { ArrowLeft, Send, Smile } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import socket from "../config/socket";
 
@@ -13,8 +13,10 @@ function ChatDetails({ chat, id, onBack }: any) {
   const updateEmoji = (emoji: any) => {
     setText(text => text + emoji.emoji);
   }
+  const bottomRef = useRef(null)
   useEffect(() => {
     setMessages(msg)
+    bottomRef.current?.scrollIntoView({behaviour: 'smooth'})
   }, [id, msg])
   useEffect(() => {
     socket.on('receieveMsg', (msg: any) => {
@@ -62,6 +64,7 @@ function ChatDetails({ chat, id, onBack }: any) {
             </div>
           </div>
         ))}
+        <div ref={bottomRef} />
       </div>
       {
         picker && <div className="absolute left-2 bottom-16">

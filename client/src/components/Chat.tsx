@@ -7,6 +7,7 @@ import ChatDetails from './ChatDetails'
 import { getMessages } from '../redux/slices/messageSlice'
 import { Search } from 'lucide-react'
 import { set } from 'react-hook-form'
+import socket from '../config/socket'
 
 function Chat() {
   const user = useSelector((state: any) => state.user.user)
@@ -24,7 +25,7 @@ function Chat() {
     if (user) {
       setLoading(true)
       async function getChat() {
-        axios.get(`http://localhost:4000/chat/${user.id}`, {
+        axios.get(`http://localhost:4000/chat/${user.id}/${new Date().getTime()}`, {
           withCredentials: true
         }).then((res) => {
           dispatch(setChat(res.data))
@@ -39,6 +40,13 @@ function Chat() {
       getChat()
     }
   }, [user, dispatch])
+  useEffect(() => {
+    if(user && user.username)
+      socket.emit('register', user.username)
+    return () => {
+      socket.off('register')
+    }
+  }, [user])
   useEffect(() => {
     if(chats) {
       setFiltered(chats.filter((chat: any) => {

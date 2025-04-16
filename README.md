@@ -1,3 +1,4 @@
+
 ```
 JustUs
 ├─ client
@@ -13,15 +14,17 @@ JustUs
 │  │  ├─ App.css
 │  │  ├─ App.tsx
 │  │  ├─ assets
-│  │  │  ├─ logo.gif
-│  │  │  ├─ logo1.gif
-│  │  │  └─ react.svg
 │  │  ├─ components
+│  │  │  ├─ Chat.tsx
+│  │  │  ├─ ChatDetails.tsx
 │  │  │  ├─ Header.tsx
 │  │  │  ├─ HeroSection.tsx
 │  │  │  ├─ Login.tsx
+│  │  │  ├─ NotFound.tsx
 │  │  │  ├─ Profile.tsx
 │  │  │  └─ SignUp.tsx
+│  │  ├─ config
+│  │  │  └─ socket.ts
 │  │  ├─ hooks
 │  │  │  └─ useNotify.tsx
 │  │  ├─ index.css
@@ -29,6 +32,7 @@ JustUs
 │  │  ├─ redux
 │  │  │  ├─ slices
 │  │  │  │  ├─ chatSlice.ts
+│  │  │  │  ├─ messageSlice.ts
 │  │  │  │  └─ userSlice.ts
 │  │  │  └─ store.ts
 │  │  ├─ RootLayout.tsx
