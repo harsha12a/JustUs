@@ -5,15 +5,15 @@ import { setChat } from '../redux/slices/chatSlice'
 import profile from '../assets/profile.png'
 import ChatDetails from './ChatDetails'
 import { getMessages } from '../redux/slices/messageSlice'
-import { Search } from 'lucide-react'
-import { set } from 'react-hook-form'
+import { MessageCirclePlus, Search } from 'lucide-react'
 import socket from '../config/socket'
+import NewChatDialog from './NewChatDialog'
 
 function Chat() {
   const user = useSelector((state: any) => state.user.user)
   const chats = useSelector((state: any) => state.chat.chat)
   const dispatch = useDispatch()
-
+  const [dialog, setDialog] = useState(false)
   const [currChat, setCurrChat] = useState([])
   const [loading, setLoading] = useState(false)
   const [chat, setChats] = useState({})
@@ -21,6 +21,8 @@ function Chat() {
   const [searchQuery, setSearchQuery] = useState('')
   const [filtered, setFiltered] = useState([])
   const [id, setId] = useState("")
+  const [showChat, setShowChat] = useState(false);
+  const [refresh, setRefresh] = useState(0);
   useEffect(() => {
     if (user) {
       setLoading(true)
@@ -39,16 +41,16 @@ function Chat() {
       }
       getChat()
     }
-  }, [user, dispatch])
+  }, [user, dispatch, refresh])
   useEffect(() => {
-    if(user && user.username)
+    if (user && user.username)
       socket.emit('register', user.username)
     return () => {
       socket.off('register')
     }
   }, [user])
   useEffect(() => {
-    if(chats) {
+    if (chats) {
       setFiltered(chats.filter((chat: any) => {
         const other = chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0]
         return other.username.toLowerCase().includes(searchQuery.toLowerCase())
@@ -61,6 +63,7 @@ function Chat() {
     await axios.get(`http://localhost:4000/message/${chat.id}`, { withCredentials: true })
       .then((res) => {
         setCurrChat(res.data)
+        setShowChat(true)
         dispatch(getMessages(res.data))
         setId(chat.id)
         setShowChatDetails(true)
@@ -75,6 +78,7 @@ function Chat() {
 
   const handleBack = () => {
     setShowChatDetails(false)
+    setShowChat(false)
     setCurrChat([])
     setId("")
   }
@@ -100,35 +104,40 @@ function Chat() {
             className="py-3 bg-transparent border-none outline-none w-full"
           />
         </div>
-
         {
-          filtered.length !== 0 ? (
-            <div>
-              {filtered.map((chat: any) => {
-                const other = chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0]
-                return (
-                  <div
-                    key={chat.id}
-                    className='flex items-center gap-5 cursor-pointer dark:hover:bg-brn hover:bg-grn rounded-sm p-2 m-2'
-                    onClick={() => getChat(chat)}
-                  >
-                    <img src={other.profilePic || profile} alt="" className='ml-3 w-10 rounded-full' />
-                    <div className='text-xl'>{other.username}</div>
-                  </div>
-                )
-              })}
-            </div>
-          ) : (
-            <div className='flex justify-center h-full items-center text-xl'>No Chats Available</div>
-          )
+          dialog && <NewChatDialog setDialog={setDialog} onClose={() => setRefresh(prev => prev + 1)} />
         }
+        <div className='relative h-full'>
+          <div className='w-40' onClick={() => setDialog(true)}><MessageCirclePlus className='absolute rounded-lg bottom-5 right-5 bg-green-500 text-black p-2 cursor-pointer' size={40} /></div>
+          {
+            filtered.length !== 0 ? (
+              <div>
+                {filtered.map((chat: any) => {
+                  const other = chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0]
+                  return (
+                    <div
+                      key={chat.id}
+                      className='flex items-center gap-5 cursor-pointer dark:hover:bg-brn hover:bg-grn rounded-sm p-2 m-2'
+                      onClick={() => getChat(chat)}
+                    >
+                      <img src={other.profilePic || profile} alt="" className='ml-3 w-10 rounded-full' />
+                      <div className='text-xl'>{other.username}</div>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              <div className='flex justify-center h-full items-center text-xl'>No Chats Available</div>
+            )
+          }
+        </div>
 
       </div>
 
       {/* Chat details panel */}
       <div className={`flex-grow ${showChatDetails ? 'block' : 'hidden'} sm:block`}>
         {
-          currChat.length !== 0 ? (
+          showChat ? (
             <ChatDetails chat={chat} id={id} onBack={handleBack} />
           ) : (
             <div className='flex justify-center items-center h-full text-2xl'>No Chat Selected</div>

@@ -21,9 +21,9 @@ export const getChat = asyncHandler ( async (req, res) => {
             //         }
             //     }
             // },
-            // orderBy: {
-            //     updatedAt: 'desc'
-            // }
+            orderBy: {
+                updatedAt: 'desc'
+            }
         })
         await Promise.all(
             resp.map(async(user) => {
@@ -56,8 +56,8 @@ export const createChat = asyncHandler ( async (req, res) => {
             where: {
                 username: {
                     in: [
-                        req.body.userId.toLowerCase(),
-                        req.body.inviteeId.toLowerCase()
+                        req.body.inviter.toLowerCase(),
+                        req.body.invitee.toLowerCase()
                     ]
                 }
             }
@@ -74,7 +74,7 @@ export const createChat = asyncHandler ( async (req, res) => {
                 }
             }
         })
-        if (chat) return res.status(400).send({ message: "Chat already exists", payload: chat })
+        if (chat) return res.status(409).send({ message: "Chat already exists", payload: chat })
         let resp = await prisma.chat.create({
             data: {
                 participants: [

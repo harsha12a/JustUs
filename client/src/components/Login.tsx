@@ -38,16 +38,16 @@ function Login() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit(handleForm)} className='mx-5 py-20 flex flex-col gap-20 justify-between items-center sm:w-[600px] w-full bg-gray-200 dark:bg-gray-900 p-5'>
-        <div className='text-3xl font-semibold'>Login</div>
+      <form onSubmit={handleSubmit(handleForm)} className='mx-5 py-20 flex flex-col justify-between items-center sm:w-[500px] w-full bg-gray-200 dark:bg-gray-900 p-5'>
+        <div className='text-3xl font-semibold mb-20'>Login</div>
         <div className='flex flex-col gap-1 sm:w-[70%] w-full'>
           {/* <label htmlFor='username'>Username</label> */}
-          <div className="relative w-full">
+          <div className="relative w-full mb-10">
             <input
               type="text"
               {...register('username', { required: true })}
               // placeholder=" "
-              className={`peer p-2 px-5 w-full bg-transparent border rounded-sm focus:outline-none focus:border-black dark:focus:border-white border-black dark:border-white`}
+              className={`peer p-4 px-5 w-full bg-transparent border rounded-sm focus:outline-none focus:border-black dark:focus:border-white border-black dark:border-white`}
               id="username"
             />
             <div className={`pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 transition-all duration-200 peer-focus:top-0 bg-gray-200 dark:bg-gray-900 px-1 peer-focus:text-sm ${watch('username') ? 'top-[0px] text-sm' : ''} text-lg`}>
@@ -59,14 +59,14 @@ function Login() {
 
           {err.username && <span className='text-red-500'>*This field is required</span>}
         </div>
-        <div className='flex flex-col gap-1 sm:w-[70%] w-full'>
+        <div className='flex flex-col gap-1 sm:w-[70%] w-full mb-20'>
           {/* <label htmlFor='password'>Password</label> */}
           <div className="relative w-full">
             <input
               type="password"
               {...register('password', { required: true })}
               // placeholder=" "
-              className={`peer p-2 px-5 w-full bg-transparent border rounded-sm focus:outline-none focus:border-black dark:focus:border-white border-black dark:border-white`}
+              className={`peer p-4 px-5 w-full bg-transparent border rounded-sm focus:outline-none focus:border-black dark:focus:border-white border-black dark:border-white`}
               id="password"
             />
             <div className={`pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 transition-all duration-200 peer-focus:top-0 bg-gray-200 dark:bg-gray-900 px-1 peer-focus:text-sm ${watch('password') ? 'top-[0px] text-sm' : ''} text-lg`}>
@@ -77,7 +77,7 @@ function Login() {
           </div>
           {err.password && <span className='text-red-500'>*This field is required</span>}
         </div>
-        <button type="submit" className='bg-blue-500 text-white w-fit px-5 py-1 rounded-[2px]'>Login</button>
+        <button type="submit" className='bg-blue-500 text-white w-fit px-5 py-2 hover:bg-blue-600 rounded-sm'>Login</button>
       </form>
     </div>
   )
