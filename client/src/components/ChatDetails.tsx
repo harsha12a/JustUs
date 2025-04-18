@@ -16,14 +16,16 @@ function ChatDetails({ chat, id, onBack }: any) {
   const bottomRef = useRef(null)
   useEffect(() => {
     setMessages(msg)
-    bottomRef.current?.scrollIntoView({behaviour: 'smooth'})
   }, [id, msg])
   useEffect(() => {
+    bottomRef.current?.scrollIntoView({behaviour: 'smooth'})
+  }, [messages])
+  useEffect(() => {
     socket.on('receieveMsg', (msg: any) => {
-      setMessages(prev => [...prev, msg])
+      setMessages((prev: any) => [...prev, msg])
     })
     socket.on('messageSent', (msg: any) => {
-      setMessages(prev => [...prev, msg])
+      setMessages((prev: any) => [...prev, msg])
     })
     return () => {
       socket.off('receieveMsg')

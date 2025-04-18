@@ -1,4 +1,4 @@
-import { Menu, Moon, Sun } from "lucide-react";
+import { CircleUser, LogIn, LogOut, Menu, MessageSquareText, Moon, Sun, UserPlus } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
@@ -47,14 +47,29 @@ function Header() {
         <div className="hidden sm:flex items-center gap-24 text-lg">
           {!status ? (
             <>
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Signup</Link>
+              <div className="relative group">
+              <Link to="/login"><LogIn /></Link>
+              <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-transform dark:bg-gray-200 bg-gray-900 dark:text-black text-white text-xs rounded px-2 py-1 whitespace-nowrap">Login</span>
+              </div>
+              <div className="relative group">
+              <Link to="/signup"><UserPlus /></Link>
+              <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-transform dark:bg-gray-200 bg-gray-900 dark:text-black text-white text-xs rounded px-2 py-1 whitespace-nowrap">SignUp</span>
+              </div>
             </>
           ) : (
             <>
-              <button onClick={() => {handleLogout();navigate('/')}}>Logout</button>
-              <Link to="/chat">Chats</Link>
-              <Link to="/profile">Profile</Link>
+              <div className="relative group">
+                <button onClick={() => {handleLogout();navigate('/')}}><LogOut /></button>
+                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-transform dark:bg-gray-200 bg-gray-900 dark:text-black text-white text-xs rounded px-2 py-1 whitespace-nowrap">Logout</span>
+              </div>
+              <div className="relative group">
+                <Link to="/chat"><MessageSquareText /></Link>
+                <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-transform dark:bg-gray-200 bg-gray-900 dark:text-black text-white text-xs rounded px-2 py-1 whitespace-nowrap">Chats</span>
+              </div>
+              <div className="relative group">
+              <Link to="/profile"><CircleUser /></Link>
+              <span className="absolute top-full mt-2 left-1/2 -translate-x-1/2 scale-0 group-hover:scale-100 transition-transform dark:bg-gray-200 bg-gray-900 dark:text-black text-white text-xs rounded px-2 py-1 whitespace-nowrap">Profile</span>
+              </div>
             </>
           )}
         </div>

@@ -91,7 +91,7 @@ function Chat() {
 
       {/* Chat list sidebar */}
       <div className={`flex-col overflow-y-auto sm:w-[350px] sm:flex w-full ${showChatDetails ? 'hidden' : 'flex'} border-r-2 border-gray-500`}>
-        <div className="flex bg-gray-600 px-5 items-center">
+        <div className="flex bg-gray-200 dark:bg-gray-600 px-5 items-center">
           <Search className="mr-3" />
           <input
             type="text"
@@ -119,7 +119,7 @@ function Chat() {
               })}
             </div>
           ) : (
-            <div>No Chats</div>
+            <div className='flex justify-center h-full items-center text-xl'>No Chats Available</div>
           )
         }
 
