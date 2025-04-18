@@ -16,7 +16,7 @@ function NewChatDialog({ setDialog, onClose }) {
         console.log(res)
         onClose()
       })
-      .catch(err => console.log(err))
+      .catch(err => notify.error(err.response.data.message))
       .finally(() => setLoading(false))
   }
   const handleSubmit = () => {

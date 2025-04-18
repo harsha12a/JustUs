@@ -1,5 +1,4 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-import HeroSection from './components/HeroSection'
 import RootLayout from './RootLayout'
 import Login from './components/Login'
 import SignUp from './components/SignUp'
@@ -7,6 +6,7 @@ import { ToastContainer } from 'react-toastify'
 import Profile from './components/Profile'
 import Chat from './components/Chat'
 import NotFound from './components/NotFound'
+import Home from './components/Home'
 
 function App() {
   const browser = createBrowserRouter([
@@ -16,7 +16,7 @@ function App() {
       children: [
         {
           path: '/',
-          element: <HeroSection />
+          element: <Home />
         },
         {
           path: 'login',

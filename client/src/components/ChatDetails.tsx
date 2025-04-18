@@ -3,6 +3,7 @@ import { ArrowLeft, Send, Smile } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import socket from "../config/socket";
+import profile from '../assets/profile.png'
 
 function ChatDetails({ chat, id, onBack }: any) {
   const user = useSelector((state: any) => state.user.user);
@@ -18,7 +19,7 @@ function ChatDetails({ chat, id, onBack }: any) {
     setMessages(msg)
   }, [id, msg])
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({behaviour: 'smooth'})
+    bottomRef.current?.scrollIntoView({ behaviour: 'smooth' })
   }, [messages])
   useEffect(() => {
     socket.on('receieveMsg', (msg: any) => {
@@ -33,39 +34,62 @@ function ChatDetails({ chat, id, onBack }: any) {
     }
   })
   const handleMessage = (e: any) => {
-    if(e.shiftKey) return;
+    if (e.shiftKey) return;
     e.preventDefault()
     setText("")
     setPicker(false)
-    // axios.post(`http://localhost:4000/message/${id}`, { senderId: user.id, content: text}, { withCredentials: true })
-    // .then((res) => console.log(res))
-    // .catch(err => console.log(err))
     socket.emit('sendMsg', { chatId: id, senderId: user.id, receiverUsername: chat.username, content: text })
   }
   return (
     <div className="relative h-[calc(100vh-60px)] flex flex-col">
       <nav className="bg-grn dark:bg-brn w-full p-4 font-semibold flex items-center justify-between">
-        <button className="sm:hidden text-lg" onClick={onBack}><ArrowLeft /></button>
+        <button className="sm:hidden text-lg mr-6" onClick={onBack}><ArrowLeft /></button>
+        <img src={chat?.profilePic || profile} width={40} className="rounded-full" alt="" />
         <span className="mx-auto">{chat?.username}</span>
       </nav>
 
       <div className="flex-1 overflow-y-auto px-4 py-2 space-y-2">
-        {messages.map((msg: any) => (
-          <div
-            key={msg.id}
-            className={`flex ${msg.senderId === user.id ? "justify-end" : "justify-start"
-              }`}
-          >
-            <div
-              className={`max-w-xs px-4 py-2 rounded-md break-words ${msg.senderId === user.id
-                  ? "bg-green-500 text-white ml-auto"
-                  : "bg-gray-300 text-black mr-auto"
-                }`}
-            >
-              {msg.content}
-            </div>
-          </div>
-        ))}
+        {(() => {
+          const today = new Date().toDateString();
+          let todayLabelInserted = false;
+
+          return messages.map((msg: any) => {
+            const isToday = new Date(msg.createdAt).toDateString() === today;
+            const showTodayLabel = isToday && !todayLabelInserted;
+
+            if (showTodayLabel) todayLabelInserted = true;
+
+            return (
+              <div key={msg.id}>
+                {showTodayLabel && (
+                  <div className="text-center text-sm rounded-md bg-gray-700 text-white w-fit mx-auto px-3 py-1 my-2">Today</div>
+                )}
+                <div
+                  className={`flex ${msg.senderId === user.id ? "justify-end" : "justify-start"}`}
+                >
+                  <div
+                    className={`max-w-xs px-4 py-2 rounded-md break-words ${msg.senderId === user.id
+                        ? "bg-green-500 text-white ml-auto"
+                        : "bg-gray-300 text-black mr-auto"
+                      }`}
+                  >
+                    <p>{msg.content}</p>
+                    {msg.createdAt && (
+                      <p className="text-[8px] text-right opacity-70">
+                        {new Date(msg.createdAt).toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          });
+        })()}
+
+
         <div ref={bottomRef} />
       </div>
       {

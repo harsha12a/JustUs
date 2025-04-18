@@ -35,12 +35,12 @@ function Header() {
   };
 
   return (
-    <header className="">
-      <div className="sm:hidden absolute right-24 cursor-pointer top-5 z-20" onClick={() => setHeader(!header)}>
+    <header className="sticky top-0 z-[50]">
+      <div className="sm:hidden absolute right-24 cursor-pointer top-5 z-[100]" onClick={() => setHeader(!header)}>
         <Menu />
       </div>
 
-      <nav className="flex p-4 justify-between items-center dark:bg-[#1b222c] bg-[#ddc2ff]">
+      <nav className="flex p-4 justify-between items-center dark:bg-gray-900 bg-gray-50 shadow-md">
         <div className="ml-5 font-bold text-xl fonting">JustUs</div>
 
         {/* Desktop Menu */}

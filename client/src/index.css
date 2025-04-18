@@ -10,7 +10,29 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+
+.gradient-bg {
+    background-color: rgba(196, 181, 253, 0.3); /* fallback */
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        white 0px,
+        white 2px,
+        rgba(168, 85, 247, 0.3) 2px,
+        rgba(168, 85, 247, 0.3) 25px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        white 0px,
+        white 2px,
+        rgba(168, 90, 243, 0.3) 2px,
+        rgba(168, 90, 243, 0.3) 25px
+      );
+    background-blend-mode: multiply;
+  }
+  
 
 .dark {
     background-color: #000;

@@ -8,8 +8,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        brn: '#531516',
-        grn: '#e3ffd7'
+        brn: '#422006',
+        grn: '#4ade80'
       }
     },
   },
