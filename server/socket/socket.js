@@ -25,6 +25,13 @@ function initSocket (io) {
             }
         })
 
+        socket.on('deleteMsg', ({ id, receiver }) => {
+            const receiverSocket = onlineUsers.get(receiver)
+            if(receiverSocket) {
+                io.to(receiverSocket).emit('messageDeleted', { id })
+            }
+        })
+
         socket.on('disconnect', () => {
             for(let [name, sid] of onlineUsers.entries()) {
                 if(sid === socket.id) {

@@ -1,9 +1,10 @@
 import EmojiPicker from "emoji-picker-react";
-import { ArrowLeft, Send, Smile } from "lucide-react";
+import { ArrowLeft, Send, Smile, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import socket from "../config/socket";
 import profile from '../assets/profile.png'
+import axios from "axios";
 
 function ChatDetails({ chat, id, onBack }: any) {
   const user = useSelector((state: any) => state.user.user);
@@ -25,14 +26,27 @@ function ChatDetails({ chat, id, onBack }: any) {
     socket.on('receieveMsg', (msg: any) => {
       setMessages((prev: any) => [...prev, msg])
     })
+    socket.on('deleteMsg', (id: string) => {
+      setMessages((prev: any) => prev.filter((msg: any) => msg.id !== id))
+    })
     socket.on('messageSent', (msg: any) => {
       setMessages((prev: any) => [...prev, msg])
     })
     return () => {
       socket.off('receieveMsg')
       socket.off('messageSent')
+      socket.off('deleteMsg')
     }
   })
+  const handleDelete = (id: string, senderId: string) => {
+    if(user.id !== senderId) return
+    socket.emit('deleteMsg', { id, receiver: chat.username })
+    axios.delete(`http://localhost:4000/message/${id}`, { withCredentials: true })
+    .then(() => {
+      setMessages((prev: any) => prev.filter((msg: any) => msg.id !== id))
+    })
+    .catch((err) => console.log(err))
+  }
   const handleMessage = (e: any) => {
     if (e.shiftKey) return;
     e.preventDefault()
@@ -67,6 +81,7 @@ function ChatDetails({ chat, id, onBack }: any) {
                 <div
                   className={`flex ${msg.senderId === user.id ? "justify-end" : "justify-start"}`}
                 >
+                  <div className="relative group">
                   <div
                     className={`max-w-xs px-4 py-2 rounded-md break-words ${msg.senderId === user.id
                         ? "bg-green-500 text-white ml-auto"
@@ -82,6 +97,8 @@ function ChatDetails({ chat, id, onBack }: any) {
                         })}
                       </p>
                     )}
+                  </div>
+                  <span className={`${msg.senderId !== user.id ? 'group-hover:hidden' : '-left-4' } hidden group-hover:block absolute top-1 cursor-pointer`} onClick={() => handleDelete(msg.id, msg.senderId)}><Trash2 className="text-red-500" size={16} /></span>
                   </div>
                 </div>
               </div>

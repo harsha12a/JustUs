@@ -102,7 +102,7 @@ function Header() {
             </>
           ) : (
             <>
-              <button onClick={() => { handleLogout(); setHeader(false); }}>Logout</button>
+              <button onClick={() => { handleLogout(); navigate('/'); setHeader(false); }}>Logout</button>
               <Link to="/chat" onClick={() => setHeader(false)}>Chats</Link>
               <Link to="/profile" onClick={() => setHeader(false)}>Profile</Link>
             </>

@@ -4,7 +4,7 @@ const HeroSection = () => {
   return (
     <section className="relative overflow-hidden">
       {/* Gradient Background above all elements */}
-      <div className="absolute inset-0 translate-x-1/2 gradient-bg w-[95%] rounded-full z-0"></div>
+      <div className="hidden sm:block absolute inset-0 translate-x-1/2 gradient-bg w-[95%] rounded-full z-0"></div>
 
       {/* Decorative Elements */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-green-300 dark:bg-green-700 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 translate-x-32 z-10"></div>
