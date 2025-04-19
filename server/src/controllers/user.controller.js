@@ -59,13 +59,13 @@ export const loginUser = asyncHandler ( async (req, res) => {
                 delete resp.password
                 res.cookie('token', token, {
                     httpOnly: true,
-                    secure: false,
+                    secure: true,
                     sameSite: 'Strict',
                     maxAge: 15 * 60 * 1000
                 })
                 res.cookie('refreshToken', refreshToken, {
                     httpOnly: true,
-                    secure: false,
+                    secure: true,
                     sameSite: 'Strict',
                     maxAge: 30 * 24 * 60 * 60 * 1000
                 })
@@ -81,7 +81,12 @@ export const loginUser = asyncHandler ( async (req, res) => {
 export const logoutUser = asyncHandler ( async (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
-        secure: false,
+        secure: true,
+        sameSite: 'Strict'
+    })
+    res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: true,
         sameSite: 'Strict'
     })
     res.send({ message: "Logout successful" })
