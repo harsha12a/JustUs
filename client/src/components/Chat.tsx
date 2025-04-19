@@ -26,7 +26,7 @@ function Chat() {
     if (user) {
       setLoading(true)
       async function getChat() {
-        axios.get(`https://just-us-server.vercel.app/chat/${user.id}/${new Date().getTime()}`, {
+        axios.get(`https://justus-8qo2.onrender.com/chat/${user.id}/${new Date().getTime()}`, {
           withCredentials: true
         }).then((res) => {
           dispatch(setChat(res.data))
@@ -59,7 +59,7 @@ function Chat() {
   const getChat = async (chat: any) => {
     setLoading(true)
     setChats(chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0])
-    await axios.get(`https://just-us-server.vercel.app/message/${chat.id}/${new Date().getTime()}`, { withCredentials: true })
+    await axios.get(`https://justus-8qo2.onrender.com/message/${chat.id}/${new Date().getTime()}`, { withCredentials: true })
       .then((res) => {
         setShowChat(true)
         dispatch(getMessages(res.data))

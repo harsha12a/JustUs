@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client'
 
-const socket = io('https://just-us-server.vercel.app', {
+const socket = io('https://justus-8qo2.onrender.com', {
     withCredentials: true
 });
 

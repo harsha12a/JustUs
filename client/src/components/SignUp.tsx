@@ -17,7 +17,7 @@ function Signup() {
 
     setLoading(true)
     delete data.confirmPassword
-    axios.post('https://just-us-server.vercel.app/user', data, {
+    axios.post('https://justus-8qo2.onrender.com/user', data, {
       withCredentials: true
     })
       .then((res) => {
