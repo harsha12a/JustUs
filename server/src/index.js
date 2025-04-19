@@ -13,7 +13,7 @@ let app = express()
 dotenv.config()
 
 app.use(cors({
-    origin: 'https://just-us-client.vercel.app/',
+    origin: 'https://just-us-client.vercel.app',
     credentials: true,
 }))
 app.use(cookieParser())
@@ -23,7 +23,7 @@ app.use(morgan('dev'))
 const server = http.createServer(app)
 const io = new Server(server, {
     cors: {
-        origin: 'https://just-us-client.vercel.app/',
+        origin: 'https://just-us-client.vercel.app',
         credentials: true
     }
 })
