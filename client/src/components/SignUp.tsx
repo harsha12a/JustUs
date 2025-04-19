@@ -17,7 +17,7 @@ function Signup() {
 
     setLoading(true)
     delete data.confirmPassword
-    axios.post('http://localhost:4000/user', data, {
+    axios.post('https://just-us-server.vercel.app/user', data, {
       withCredentials: true
     })
       .then((res) => {

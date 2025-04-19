@@ -16,7 +16,7 @@ function Login() {
   // const user = useSelector((state: object) => state.user)
   const handleForm = (obj: object) => {
     setLoading(true)
-    axios.post('http://localhost:4000/user/login', obj, {
+    axios.post('https://just-us-server.vercel.app/user/login', obj, {
       withCredentials: true
     })
       .then((res) => {

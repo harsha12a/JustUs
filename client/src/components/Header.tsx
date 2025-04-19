@@ -30,7 +30,7 @@ function Header() {
   }, [header]);
 
   const handleLogout = () => {
-    axios.post("http://localhost:4000/user/logout", {}, { withCredentials: true });
+    axios.post("https://just-us-server.vercel.app/user/logout", {}, { withCredentials: true });
     dispatch(logout());
   };
 

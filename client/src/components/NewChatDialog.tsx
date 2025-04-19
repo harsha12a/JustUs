@@ -9,7 +9,7 @@ function NewChatDialog({ setDialog, onClose }: any) {
   const [loading, setLoading] = useState(false);
   const handleInp = () => {
     setInput('')
-    axios.post('http://localhost:4000/chat', { inviter: user.username, invitee: input }, { withCredentials: true })
+    axios.post('https://just-us-server.vercel.app/chat', { inviter: user.username, invitee: input }, { withCredentials: true })
       .then(res => {
         setDialog(false)
         notify.success('Chat started successfully')
