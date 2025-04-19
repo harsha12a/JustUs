@@ -44,13 +44,18 @@ export const createMessage = asyncHandler(async (req, res) => {
     }
 })
 
+export const delMsg = async (id) => {
+    let resp = await prisma.message.delete({
+        where: {
+            id: id
+        }
+    })
+    return resp
+}
+
 export const deleteMessage = asyncHandler(async (req, res) => {
     try {
-        const resp = await prisma.message.delete({
-            where: {
-                id: req.params.id
-            }
-        })
+        const resp = await delMsg(req.params.id)
         res.status(200).json({ message: "Deleted", payload: resp })
     }
     catch (error) {

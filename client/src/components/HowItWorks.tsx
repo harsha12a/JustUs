@@ -3,7 +3,6 @@ import { UserPlus, MessageSquare, Heart } from 'lucide-react';
 const StepCard = ({ number, icon, title, description }: any) => {
   return (
     <div className="relative">
-      {/* Step number */}
       <div className="absolute -left-4 -top-4 h-10 w-10 rounded-full bg-green-600 dark:bg-green-500 text-white flex items-center justify-center text-xl font-bold shadow-lg">
         {number}
       </div>

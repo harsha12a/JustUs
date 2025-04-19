@@ -6,7 +6,6 @@ const HeroSection = () => {
       {/* Gradient Background above all elements */}
       <div className="hidden sm:block absolute inset-0 translate-x-1/2 gradient-bg w-[95%] rounded-full z-0"></div>
 
-      {/* Decorative Elements */}
       <div className="absolute top-1/4 left-10 w-64 h-64 bg-green-300 dark:bg-green-700 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 translate-x-32 z-10"></div>
       <div className="absolute top-1/3 right-10 w-72 h-72 bg-yellow-200 dark:bg-yellow-700 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animation-delay-2000 z-10"></div>
       <div className="absolute bottom-1/3 left-1/3 w-80 h-80 bg-purple-200 dark:bg-purple-700 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animation-delay-4000 z-10"></div>
@@ -78,7 +77,6 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20 text-center">
           <div>
             <h3 className="text-3xl sm:text-4xl font-bold text-green-600 dark:text-green-400">2M+</h3>
@@ -88,14 +86,6 @@ const HeroSection = () => {
             <h3 className="text-3xl sm:text-4xl font-bold text-green-600 dark:text-green-400">150+</h3>
             <p className="text-gray-600 dark:text-gray-400 mt-2">Countries</p>
           </div>
-          {/* <div>
-            <h3 className="text-3xl sm:text-4xl font-bold text-green-600 dark:text-green-400">99.9%</h3>
-            <p className="text-gray-600 dark:text-gray-600 mt-2">Uptime</p>
-          </div> */}
-          {/* <div>
-            <h3 className="text-3xl sm:text-4xl font-bold text-green-600 dark:text-green-400">4.8</h3>
-            <p className="text-gray-600 dark:text-gray-600 mt-2">App Store Rating</p>
-          </div> */}
         </div>
       </div>
     </section>

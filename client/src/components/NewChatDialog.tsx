@@ -2,7 +2,7 @@ import { useState } from "react"
 import useNotify from "../hooks/useNotify"
 import axios from "axios"
 import { useSelector } from "react-redux"
-function NewChatDialog({ setDialog, onClose }) {
+function NewChatDialog({ setDialog, onClose }: any) {
   const notify = useNotify()
   const [input, setInput] = useState('')
   const user = useSelector((state: any) => state.user.user)

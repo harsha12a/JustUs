@@ -7,6 +7,7 @@ import Profile from './components/Profile'
 import Chat from './components/Chat'
 import NotFound from './components/NotFound'
 import Home from './components/Home'
+import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   const browser = createBrowserRouter([
@@ -27,12 +28,17 @@ function App() {
           element: <SignUp />
         },
         {
-          path: 'chat',
-          element: <Chat />
-        },
-        {
-          path: 'profile',
-          element: <Profile />
+          element: <ProtectedRoute />,
+          children: [
+            {
+              path: 'chat',
+              element: <Chat />
+            },
+            {
+              path: 'profile',
+              element: <Profile />
+            },
+          ]
         },
         {
           path: '*',

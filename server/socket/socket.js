@@ -1,4 +1,4 @@
-import { saveMsg } from "../src/controllers/message.controller.js"
+import { delMsg, saveMsg } from "../src/controllers/message.controller.js"
 
 const onlineUsers = new Map()
 
@@ -25,10 +25,20 @@ function initSocket (io) {
             }
         })
 
-        socket.on('deleteMsg', ({ id, receiver }) => {
-            const receiverSocket = onlineUsers.get(receiver)
-            if(receiverSocket) {
-                io.to(receiverSocket).emit('messageDeleted', { id })
+        socket.on('deleteMsg', async ({ id, receiver, sender }) => {
+            try {
+                await delMsg(id)
+                const receiverSocket = onlineUsers.get(receiver)
+                if(receiverSocket) {
+                    io.to(receiverSocket).emit('messageDeleted', { id })
+                }
+                const senderSocket = onlineUsers.get(sender)
+                if(senderSocket) {
+                    io.to(senderSocket).emit('messageDeleted', { id })
+                }
+            }
+            catch(err) {
+                console.log(err)
             }
         })
 

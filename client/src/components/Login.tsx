@@ -4,13 +4,15 @@ import { useDispatch } from 'react-redux'
 import { login } from '../redux/slices/userSlice'
 import { useState } from 'react'
 import useNotify from '../hooks/useNotify'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 function Login() {
   const { register, watch, handleSubmit, formState: { errors: err } } = useForm()
   const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const notify = useNotify()
   const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || '/chat'
   // const user = useSelector((state: object) => state.user)
   const handleForm = (obj: object) => {
     setLoading(true)
@@ -20,7 +22,7 @@ function Login() {
       .then((res) => {
         dispatch(login(res.data.resp))
         notify.success(res.data.message)
-        navigate('/chat')
+        navigate(from, { replace: true })
       })
       .catch((err) => {
         console.log(err)

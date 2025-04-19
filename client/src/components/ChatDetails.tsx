@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import socket from "../config/socket";
 import profile from '../assets/profile.png'
-import axios from "axios";
+import useNotify from "../hooks/useNotify";
 
 function ChatDetails({ chat, id, onBack }: any) {
   const user = useSelector((state: any) => state.user.user);
@@ -12,6 +12,7 @@ function ChatDetails({ chat, id, onBack }: any) {
   const [messages, setMessages] = useState(msg)
   const [text, setText] = useState("");
   const [picker, setPicker] = useState(false);
+  const notify = useNotify()
   const updateEmoji = (emoji: any) => {
     setText(text => text + emoji.emoji);
   }
@@ -26,8 +27,8 @@ function ChatDetails({ chat, id, onBack }: any) {
     socket.on('receieveMsg', (msg: any) => {
       setMessages((prev: any) => [...prev, msg])
     })
-    socket.on('deleteMsg', (id: string) => {
-      setMessages((prev: any) => prev.filter((msg: any) => msg.id !== id))
+    socket.on('messageDeleted', (id: any) => {
+      setMessages((prev: any) => prev.filter((msg: any) => msg.id !== id.id))
     })
     socket.on('messageSent', (msg: any) => {
       setMessages((prev: any) => [...prev, msg])
@@ -35,17 +36,14 @@ function ChatDetails({ chat, id, onBack }: any) {
     return () => {
       socket.off('receieveMsg')
       socket.off('messageSent')
-      socket.off('deleteMsg')
+      socket.off('messageDeleted')
     }
   })
   const handleDelete = (id: string, senderId: string) => {
     if(user.id !== senderId) return
-    socket.emit('deleteMsg', { id, receiver: chat.username })
-    axios.delete(`http://localhost:4000/message/${id}`, { withCredentials: true })
-    .then(() => {
-      setMessages((prev: any) => prev.filter((msg: any) => msg.id !== id))
-    })
-    .catch((err) => console.log(err))
+    notify.confirm('Are you sure you want to delete this message?', () => {
+      socket.emit('deleteMsg', { id, receiver: chat.username, sender: user.username })
+    }, () => {})
   }
   const handleMessage = (e: any) => {
     if (e.shiftKey) return;
