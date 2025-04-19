@@ -7,7 +7,6 @@ function initSocket (io) {
         console.log('Socket Connected', socket.id)
 
         socket.on('register', (username) => {
-            console.log(username)
             onlineUsers.set(username, socket.id)
         })
 

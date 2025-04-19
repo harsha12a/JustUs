@@ -51,6 +51,9 @@ export const loginUser = asyncHandler ( async (req, res) => {
             if (!isMatch) return res.status(401).send({ message: "Invalid credentials" })
             else {
                 let token = jwt.sign({ id: resp.id }, process.env.SECRET_KEY, {
+                    expiresIn: "10s"
+                })
+                let refreshToken = jwt.sign({ id: resp.id }, process.env.REFRESH_KEY, {
                     expiresIn: "30d"
                 })
                 delete resp.password
@@ -58,7 +61,13 @@ export const loginUser = asyncHandler ( async (req, res) => {
                     httpOnly: true,
                     secure: false,
                     sameSite: 'Strict',
-                    maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
+                    maxAge: 15 * 60 * 1000
+                })
+                res.cookie('refreshToken', refreshToken, {
+                    httpOnly: true,
+                    secure: false,
+                    sameSite: 'Strict',
+                    maxAge: 30 * 24 * 60 * 60 * 1000
                 })
                 return res.send({ message: "Login successful", resp })
             }
