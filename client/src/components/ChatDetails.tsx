@@ -1,4 +1,4 @@
-import EmojiPicker from "emoji-picker-react";
+import EmojiPicker, { Theme } from "emoji-picker-react";
 import { ArrowLeft, Send, Smile, Trash2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
@@ -16,12 +16,12 @@ function ChatDetails({ chat, id, onBack }: any) {
   const updateEmoji = (emoji: any) => {
     setText(text => text + emoji.emoji);
   }
-  const bottomRef = useRef(null)
+  const bottomRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
     setMessages(msg)
   }, [id, msg])
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behaviour: 'smooth' })
+    bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
   useEffect(() => {
     socket.on('receieveMsg', (msg: any) => {
@@ -109,7 +109,7 @@ function ChatDetails({ chat, id, onBack }: any) {
       </div>
       {
         picker && <div className="absolute left-2 bottom-16">
-          <EmojiPicker className="" onEmojiClick={updateEmoji} theme={localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'} />
+          <EmojiPicker className="" onEmojiClick={updateEmoji} theme={localStorage.getItem('theme') === 'dark' ? 'dark' as Theme : 'light' as Theme} />
         </div>
       }
       {/* Message Input Area */}

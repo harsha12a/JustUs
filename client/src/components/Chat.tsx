@@ -14,7 +14,6 @@ function Chat() {
   const chats = useSelector((state: any) => state.chat.chat)
   const dispatch = useDispatch()
   const [dialog, setDialog] = useState(false)
-  const [currChat, setCurrChat] = useState([])
   const [loading, setLoading] = useState(false)
   const [chat, setChats] = useState({})
   const [showChatDetails, setShowChatDetails] = useState(false)
@@ -62,7 +61,6 @@ function Chat() {
     setChats(chat.participants[0].username === user.username ? chat.participants[1] : chat.participants[0])
     await axios.get(`http://localhost:4000/message/${chat.id}/${new Date().getTime()}`, { withCredentials: true })
       .then((res) => {
-        setCurrChat(res.data)
         setShowChat(true)
         dispatch(getMessages(res.data))
         setId(chat.id)
@@ -79,7 +77,6 @@ function Chat() {
   const handleBack = () => {
     setShowChatDetails(false)
     setShowChat(false)
-    setCurrChat([])
     setId("")
   }
 
