@@ -5,7 +5,7 @@ dotenv.config()
 const tokenVerify = (req, res, next) => {
     const bearerToken = req.cookies.token || req.headers.authorization
     if(!bearerToken) {
-        return res.status(401).json({ message: 'Access token not found' })
+        return res.status(401).json({ message: 'Please login again' })
     }
     try {
         jwt.verify(bearerToken, process.env.SECRET_KEY)

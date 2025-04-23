@@ -8,6 +8,7 @@ import { getMessages } from '../redux/slices/messageSlice'
 import { MessageCirclePlus, Search } from 'lucide-react'
 import socket from '../config/socket'
 import NewChatDialog from './NewChatDialog'
+import useNotify from '../hooks/useNotify'
 
 function Chat() {
   const user = useSelector((state: any) => state.user.user)
@@ -22,6 +23,7 @@ function Chat() {
   const [id, setId] = useState("")
   const [showChat, setShowChat] = useState(false);
   const [refresh, setRefresh] = useState(0);
+  const notify = useNotify()
   useEffect(() => {
     if (user) {
       setLoading(true)
@@ -33,6 +35,7 @@ function Chat() {
         })
           .catch((err) => {
             console.log(err)
+            notify.error('Please login again')
           })
           .finally(() => {
             setLoading(false)
@@ -68,6 +71,7 @@ function Chat() {
       })
       .catch((err) => {
         console.log(err)
+        notify.error('Please login again')
       })
       .finally(() => {
         setLoading(false)
