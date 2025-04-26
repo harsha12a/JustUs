@@ -22,8 +22,8 @@ const tokenVerify = (req, res, next) => {
             })
             res.cookie('token', newAccessToken, {
                 httpOnly: true,
-                secure: false,
-                sameSite: 'Strict',
+                secure: true,
+                sameSite: 'None',
                 maxAge: 15 * 60 * 1000
             })
             console.log('refreshed')
