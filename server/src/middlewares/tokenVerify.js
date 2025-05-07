@@ -3,11 +3,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const tokenVerify = (req, res, next) => {
-    let accessToken = req.cookies.token || req.headers.authorization
-
-    if (req.headers.authorization?.startsWith('Bearer ')) {
-        accessToken = req.headers.authorization.split(' ')[1]
-    }
+    let accessToken = req.cookies.token
 
     if (!accessToken) {
         const refreshToken = req.cookies.refreshToken
